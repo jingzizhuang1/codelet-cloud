@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sign Up - Codelet Cloud</title>
+<style type="text/css">
+    * {
+        font-family: inherit;
+        font-size: inherit;
+    }
+    body {
+        font-family: Verdana, Tahoma, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        font-size: 14px;
+        padding: 1em;
+        background: #DFDFDF;
+    }
+    #content {
+        margin: auto;
+        padding: 2em;
+        width: 480px;
+        background: #FFFFFF;
+    }
+    header {
+        font-size: 1.5em;
+    }
+    pre {
+        font-family: Menlo, Monaco, Consolas, monospace;
+        text-align: center;
+        color: #9F004F;
+    }
+    footer {
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div id="content">
+    <header>Codelet Cloud User Sign Up</header>
+    <section>
+        <p>Please click <a target="codelet_cloud_sign_up" href="$signUpURL?email=$esc.url($email)&code=$esc.url($code)">this link</a> and complete the following steps.</p>
+        <p>You can also copy the following URL and paste it into your browser's address bar:</p>
+        <pre>$signUpURL?email=$esc.url($email)&code=$esc.url($code)</pre>
+        <p>Ignore this mail if you have never visited our website.</p>
+    </section>
+    <footer>&copy; 2019 Codelet</footer>
+</div>
+</body>
+</html>

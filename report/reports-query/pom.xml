@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.codelet.cloud</groupId>
+        <artifactId>reports</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>net.codelet.cloud.reports</groupId>
+    <artifactId>reports-query</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>reports-query</name>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- LiveBridge Codelet -->
+        <dependency>
+            <groupId>net.codelet.cloud.reports</groupId>
+            <artifactId>reports-query-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- jasperreports -->
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-fonts</artifactId>
+            <version>6.1.1</version>
+        </dependency>
+
+    </dependencies>
+
+</project>

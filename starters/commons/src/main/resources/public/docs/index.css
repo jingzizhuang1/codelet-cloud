@@ -1,0 +1,643 @@
+@charset "UTF-8";
+
+* {
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: none;
+}
+
+html {
+    height: 100%;
+}
+body {
+    font-size: 14px;
+    font-family: "Verdana", "Tahoma", "Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "sans-serif";
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 20em;
+    height: 100%;
+    overflow: hidden;
+    color: #BFBFBF;
+    background: #373737;
+}
+code,
+span.endpoint-count,
+span.endpoint,
+td.parameter-name,
+pre.source {
+    font-family: "Consolas", "Menlo", "Monaco", "Ubuntu Mono", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", "monospace";
+}
+a[href], a[href]:visited {
+    color: #B7D7F7;
+    text-decoration: underline;
+}
+a[href]:hover {
+    color: #00FFFF;
+}
+a[href]:active {
+    color: #FF007F;
+}
+
+::selection {
+    background-color: #005FBF;
+}
+
+/* Endpoint */
+span.responsibility,
+span.endpoint-count {
+    font-size: 12px;
+    display: inline-block;
+    margin: 0 0 0 .5em;
+    padding: 0 .5em 0 .5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    background: #2F2F2F;
+    border-radius: .2em;
+}
+span.responsibility {
+}
+span.endpoint-count {
+}
+span.endpoint {
+    display: block;
+    position: relative;
+    padding: 0 0 0 5em;
+    width: 100%;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+}
+span.endpoint > span {
+    height: 100%;
+    vertical-align: middle;
+}
+span.endpoint > span.method {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4.5em;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    border-radius: .2em;
+}
+span.endpoint > span.method.get {
+    background: rgb(0, 159, 0);
+}
+span.endpoint > span.method.post {
+    background: rgb(0, 79, 159);
+}
+span.endpoint > span.method.put {
+    background: rgb(159, 159, 0);
+}
+span.endpoint > span.method.patch {
+    background: rgb(159, 159, 0);
+}
+span.endpoint > span.method.delete {
+    background: rgb(159, 0, 0);
+}
+
+/* Index */
+body > nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    padding: 3em 0 0 0;
+    width: 20em;
+    height: 100%;
+    overflow: hidden;
+    background: #070707;
+    -webkit-backdrop-filter: blur(.25em);
+    backdrop-filter: blur(.25em);
+    -webkit-user-select: none;
+    user-select: none;
+}
+body.expand-index > nav {
+    width: 40em;
+    -webkit-box-shadow: 0 0 1em 0 #000000;
+    box-shadow: 0 0 1em 0 #000000;
+}
+body > section {
+    -webkit-transition: transform ease-in-out .25s;
+    transition: transform ease-in-out .25s;
+}
+body.expand-index > section {
+    -webkit-transform: translate3d(20em, 0, 0);
+    transform: translate3d(20em, 0, 0);
+}
+body > nav * {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+body > nav > header {
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0 1em 0 1em;
+    width: 100%;
+    height: 3em;
+    line-height: 3em;
+    color: #FFFFFF;
+}
+body > nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+body > nav > ul {
+    padding: 0 0 1em 0;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: #B7B7B7;
+}
+body > nav ul > li {
+    padding: 0;
+}
+body > nav ul > li > a {
+    display: block;
+    position: relative;
+    padding: .25em 1em .25em 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    word-break: keep-all;
+}
+body > nav > ul > li > a:hover {
+    color: #FFFFFF;
+    background: #000000;
+}
+body > nav > ul > li > ul {
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height .25s cubic-bezier(0, 1, 0, 1);
+    transition: max-height .25s cubic-bezier(0, 1, 0, 1);
+}
+body > nav ul > li.expanded > ul {
+    height: auto;
+    max-height: 999em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-transition: max-height .25s cubic-bezier(1, 0, 1, 0);
+    transition: max-height .25s cubic-bezier(1, 0, 1, 0);
+}
+body > nav > ul > li > ul > li > a {
+    padding-left: 28px;
+}
+body > nav li.responsibility > a {
+    font-size: 12px;
+    font-weight: bold;
+    color: #5F5F5F;
+    background: rgba(255, 255, 255, .05);
+}
+body > nav li.responsibility > a > span.responsibility,
+body > nav li.responsibility > a > span.endpoint-count {
+    font-weight: normal;
+    height: 1.25em;
+    line-height: 1.25em;
+}
+body > nav li.responsibility > ul {
+    padding: .5em 0 .5em 0;
+    background: rgba(255, 255, 255, .075);
+}
+body > nav li.responsibility > ul > li.endpoint > a {
+    padding: .5em 1em .5em 42px;
+}
+body > nav li.responsibility > ul > li.endpoint > a:hover {
+    color: #FFFFFF;
+    cursor: default;
+    background: rgba(255, 255, 255, .05);
+}
+body > nav li.responsibility > ul > li.endpoint.expanded > a > span.api-name {
+    font-weight: bold;
+    color: #FFFFFF;
+}
+body > nav li.responsibility > ul > li.endpoint > a:hover > span.endpoint,
+body > nav li.responsibility > ul > li.endpoint.expanded > a > span.endpoint {
+    opacity: .75;
+}
+body > nav li.responsibility > ul > li.endpoint > a > span.endpoint {
+    font-size: 12px;
+    width: 100%;
+    height: 1.5em;
+    line-height: 1.5em;
+    opacity: .25;
+}
+body > nav li.responsibility > ul > li.endpoint > a > span.endpoint {
+    margin: .125em 0 0 0;
+}
+body > nav li.responsibility > ul > li.endpoint > a > span.endpoint > span.method {
+}
+body > nav li.responsibility > ul > li.endpoint > a > span.endpoint code.parameter-name {
+    color: #7FFFFF;
+}
+
+/* Specifications */
+body > section > div.endpoint > div > span.endpoint {
+    margin: 1px;
+    padding: 0 1em 0 5em;
+    height: 2em;
+    line-height: 2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: #3F3F3F;
+    border: solid 1px #1F1F1F;
+    border-radius: .25em;
+}
+body > section > div.endpoint > div > span.endpoint > span.method {
+    text-shadow: 0 -1px rgba(0, 0, 0, .75);
+    border-radius: .25em 0 0 .25em;
+}
+
+body > section code.parameter-name,
+table.properties > tbody > tr > td.parameter-name {
+    color: #00DFDF;
+}
+body > section {
+    padding: 1em 1.5em 3em 1.5em;
+    width: 100%;
+    min-width: 24em;
+    height: 100%;
+    overflow: auto;
+}
+body > section#specifications {
+    display: none;
+}
+body.specifications > section#instructions {
+    display: none;
+}
+body.specifications > section#specifications {
+    display: block;
+}
+
+div.buttons {
+    display: none;
+}
+div.buttons > * {
+    vertical-align: middle;
+}
+
+section#instructions li {
+    margin: .5em 0 .5em 0;
+    line-height: 1.5em;
+}
+section#instructions li > * {
+    vertical-align: middle;
+}
+code.keyword {
+    color: #5FBFFF;
+}
+code.http-header {
+    padding: 0 .5em 0 .5em;
+    background: rgba(0, 0, 0, .33);
+    border-radius: .25em;
+}
+code.http-header,
+code.http-header > code {
+    display: inline-block;
+    height: 1.5em;
+    line-height: inherit;
+}
+code.http-header code.key {
+    color: #FF7F00;
+}
+code.http-header code.value {
+    color: #FFBF7F;
+}
+section#instructions code.parameter-name {
+    font-style: italic;
+    color: #5FBF00;
+}
+section#instructions li > pre.source {
+    margin: .5em 0 .5em 0;
+}
+section#instructions code.property-name {
+    color: #FFBF7F;
+}
+section#instructions code.keyword {
+    color: #FF7F00;
+}
+section#instructions code.string {
+    color: #5FBF00;
+}
+section#instructions code.number {
+    color: #00BFBF;
+}
+pre.source {
+    font-size: 12px;
+    padding: 1em;
+    min-width: 20em;
+    line-height: 1.33em;
+    overflow-x: auto;
+    background: #272727;
+}
+
+body > section > h2,
+body > section > h3 {
+    word-break: keep-all;
+    white-space: nowrap;
+    color: #FFFFFF;
+}
+body > section > h2 {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0 0 .5em 0;
+}
+body > section > h3 {
+    font-size: 1.33em;
+    margin: .75em 0 .75em 0;
+}
+body > section > div,
+body > section > p,
+body > section > ul,
+body > section > pre,
+body > section > table {
+    margin: 1em 0 1em 1em;
+}
+body > section > ul {
+    padding: 0 0 0 1.5em;
+}
+div.endpoint {
+}
+div.endpoint > div {
+    display: inline-block;
+    min-width: 24em;
+}
+body > section > pre.handler-signature {
+}
+body > section > pre.handler-signature > code.controller-signature {
+    font-size: 12px;
+    color: #7F7F7F;
+}
+body > section > pre.handler-signature > code.handler-signature {
+}
+table.properties {
+    table-layout: fixed;
+    border: solid 1px #000000;
+    border-collapse: collapse;
+}
+table.properties > * > tr > * {
+    padding: .25em .5em .25em .5em;
+    line-height: 1.4em;
+    vertical-align: top;
+}
+table.properties > * > tr > *.text-left {
+    text-align: left;
+}
+table.properties > * > tr > *.text-center {
+    text-align: center;
+}
+table.properties > thead > tr > th {
+    background: #171717;
+}
+table.properties > thead > tr > th.parameter-name {
+    min-width: 8em;
+}
+table.properties > thead > tr > th.data-type {
+    min-width: 5em;
+}
+table.properties > thead > tr > th.necessity {
+    min-width: 3em;
+}
+table.properties > thead > tr > th.description {
+    min-width: 24em;
+}
+table.properties > tbody > tr {
+}
+table.properties > tbody > tr:nth-child(odd) > td {
+    background: #373737;
+}
+table.properties > tbody > tr:nth-child(even) > td {
+    background: #2F2F2F;
+}
+td > table.properties {
+    margin-top: .25em;
+}
+
+label.values {
+    font-size: 12px;
+    display: block;
+    color: #7F7F7F;
+}
+label.values > code {
+    color: #5F7F3F;
+}
+label.values > code.value {
+    display: inline-block;
+    margin: 0 0 0 .25em;
+    padding: .25em .5em .15em .5em;
+    line-height: 1em;
+    color: #4F9F00;
+    text-shadow: 0 1px rgba(0, 0, 0, .5);
+    background: rgba(255, 255, 255, .1);
+    border-radius: .25em;
+}
+code.data-type {
+    font-size: 12px;
+    font-weight: normal;
+    display: inline-block;
+    padding: 0 .5em 0 .5em;
+    color: #5F5F5F;
+    background: rgba(0, 0, 0, 0.33);
+    border-radius: .2em;
+}
+div.no-content {
+    width: 5em;
+    padding: .5em;
+    text-align: center;
+    color: #7F7F7F;
+    background: #1F1F1F;
+    border-radius: .25em;
+}
+
+div#mask {
+    display: none;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 7;
+    width: 100%;
+    text-align: center;
+    height: 3em;
+    line-height: 3em;
+    text-shadow: 0 -1px #000000;
+    background: linear-gradient(rgba(55, 55, 55, .5), rgba(55, 55, 55, 1));
+    -webkit-backdrop-filter: blur(.25em);
+    backdrop-filter: blur(.25em);
+}
+footer > span {
+    color: #DFDFDF;
+    text-shadow: 0 -1px #000000;
+}
+
+@media screen and (max-width: 720px) {
+    body {
+        padding: 0;
+    }
+    body > nav,
+    body > nav:hover {
+        width: 20em;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        -webkit-transform: translate3d(-20em, 0, 0);
+        transform: translate3d(-20em, 0, 0);
+        -webkit-transition: transform .25s ease-in-out;
+        transition: transform .25s ease-in-out;
+    }
+    body.show-index > nav,
+    body.show-index > nav:hover {
+        font-size: 1.25em;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    body > section {
+        padding-top: 4em;
+        -webkit-transition: transform ease-in-out .25s;
+        transition: transform ease-in-out .25s;
+    }
+    body > section {
+    }
+    body.show-index > section {
+        transform: translate3d(25em, 0, 0);
+    }
+    body.show-index > section > h2 {
+        text-align: left;
+        padding: 0 0 0 1em;
+    }
+    body > section > h2,
+    div.buttons {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+    }
+    body > section > h2 {
+        font-size: 1.5em;
+        padding: 0 2em 0 2em;
+        height: 2em;
+        line-height: 2em;
+        text-align: center;
+        background: rgba(23, 23, 23, .9);
+        -webkit-box-shadow: 0 0 .5em #000000;
+        box-shadow: 0 0 .5em #000000;
+        -webkit-backdrop-filter: blur(.25em);
+        backdrop-filter: blur(.25em);
+    }
+    body > section > h3 {
+        font-size: 1.25em;
+    }
+    div.buttons {
+        z-index: 2;
+        padding: .25em;
+        height: 3em;
+
+    }
+    button#show-index {
+        display: inline-block;
+        width: 2.5em;
+        height: 2.5em;
+        -webkit-appearance: none;
+        appearance: none;
+        background: #000000 url("./show-index.png") no-repeat center center;
+        background-size: 40% 60%;
+        border: none;
+        border-radius: 1.25em;
+    }
+    button#show-index:active {
+        background-color: #373737;
+    }
+    div#mask {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    body.show-index > div#mask {
+        display: block;
+        background: rgba(0, 0, 0, .5);
+    }
+    body > section {
+        min-width: 0;
+    }
+    table {
+        width: 100%;
+    }
+    table > thead {
+        display: none;
+    }
+    table > tbody > tr {
+        display: block;
+        position: relative;
+    }
+    table > tbody > tr > td {
+        display: block;
+        padding: .25em .5em .25em .5em !important;
+        width: 100%;
+        text-align: left !important;
+    }
+    table > tbody > tr > td:first-child {
+        padding: .5em .5em .25em .5em !important;
+    }
+    table > tbody > tr > td:last-child {
+        padding: .25em .5em .5em .5em !important;
+    }
+    table > tbody > tr > td.data-type,
+    table > tbody > tr > td.necessity {
+        font-size: 12px;
+        position: absolute;
+        top: .25em;
+        padding: 0 !important;
+        line-height: 1.5em;
+        text-align: center !important;
+        color: #7F7F7F;
+        background: #1F1F1F !important;
+        border-radius: .25em;
+    }
+    table > tbody > tr > td.data-type {
+        right: .25em;
+        width: 4em;
+    }
+    table > tbody > tr > td.necessity {
+        display: none;
+        right: 4.5em;
+        width: 3em;
+    }
+    table > tbody > tr > td.necessity.required {
+        display: block;
+        color: transparent;
+    }
+    table > tbody > tr > td.necessity.required::after {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        content: "必须";
+        color: #FFFFFF;
+    }
+    table > tbody > tr > td.parameter-name {
+    }
+    td > table {
+        margin: .5em 0 0 0 !important;
+    }
+}

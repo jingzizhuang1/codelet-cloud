@@ -1,0 +1,1 @@
+[Codelet Cloud] You are going to reset your password of Codelet Cloud account, the verification code is ${code}.

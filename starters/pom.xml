@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.codelet</groupId>
+        <artifactId>cloud</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <!--suppress MavenModelInspection -->
+        <relativePath>../parent</relativePath>
+    </parent>
+
+    <groupId>net.codelet.cloud</groupId>
+    <artifactId>starters</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>starters</name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>commons</module>
+        <module>commons-log4j2</module>
+        <module>commons-discovery</module>
+        <module>commons-jpa</module>
+        <module>commons-gateway</module>
+        <module>monolithic</module>
+        <module>simple-gateway</module>
+    </modules>
+
+    <build>
+        <defaultGoal>compile</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

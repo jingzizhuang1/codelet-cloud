@@ -1,0 +1,5 @@
+spring:
+    datasource:
+        password: 1qazxsw2
+    redis:
+        password: xbzG0cxQRJyLCFEX9Ezp7gapgax5YWuj

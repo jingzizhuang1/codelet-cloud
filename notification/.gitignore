@@ -1,0 +1,14 @@
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+**/.DS_Store
+**/.classpath
+**/.idea
+**/.project
+**/.settings
+**/.vscode
+**/*.iml
+**/target
+**/desktop.ini
+**/node_modules

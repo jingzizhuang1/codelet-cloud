@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>重置密码 - Codelet Cloud</title>
+<style type="text/css">
+    * {
+        font-family: inherit;
+        font-size: inherit;
+    }
+    body {
+        font-family: Verdana, Tahoma, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        font-size: 14px;
+        padding: 1em;
+        background: #DFDFDF;
+    }
+    #content {
+        margin: auto;
+        padding: 2em;
+        width: 480px;
+        background: #FFFFFF;
+    }
+    header {
+        font-size: 1.5em;
+    }
+    pre {
+        font-family: Menlo, Monaco, Consolas, monospace;
+        text-align: center;
+        color: #9F004F;
+    }
+    footer {
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<div id="content">
+    <header>Codelet Cloud 重置密码</header>
+    <section>
+        <p>请点击<a target="codelet_cloud_reset_password" href="$resetPasswordURL?email=$esc.url($email)&code=$esc.url($code)">这里</a>重置登录密码。</p>
+        <p>如果无法通过正在使用的客户端访问以上链接，请将以下地址复制到浏览器的地址栏并访问：</p>
+        <pre>$resetPasswordURL?email=$esc.url($email)&code=$esc.url($code)</pre>
+    </section>
+    <footer>&copy; 2019 Codelet</footer>
+</div>
+</body>
+</html>

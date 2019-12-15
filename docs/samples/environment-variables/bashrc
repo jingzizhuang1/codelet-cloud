@@ -1,0 +1,32 @@
+# ~/.bashrc
+
+# Codelet Cloud
+export CC_CONFIG_SERVER="192.168.1.247:8001"                           # 配置服务器地址
+export CC_CONFIG_NAME="codelet"                                        # 配置文件名
+export CC_CONFIG_GIT_URI="codelet@192.168.1.247:cloud/config-profiles" # 配置文件 Git 库地址
+export CC_CONSUL_SERVER_HOST="192.168.1.247"                           # Consul 注册中心服务器地址
+export CC_CONSUL_SERVER_PORT="8940"                                    # Consul 注册中心服务器端口
+export CC_KAFKA_BROKERS="192.168.1.247:8960"                           # Kafka Broker 列表
+export CC_REDIS_SERVER_HOST="192.168.1.247"                            # Redis 服务器地址
+export CC_REDIS_SERVER_PORT="6301"                                     # Redis 服务器端口
+export CC_MYSQL_SERVER="192.168.1.247:3306"                            # 默认数据库
+export CC_MYSQL_SERVER_PARAMETER="${CC_MYSQL_SERVER}"                  # 业务参数数据库
+export CC_MYSQL_SERVER_AUTH="${CC_MYSQL_SERVER}"                       # 认证数据库
+export CC_MYSQL_SERVER_VERIFICATION="${CC_MYSQL_SERVER}"               # 验证码数据库
+export CC_MYSQL_SERVER_NOTIFICATION="${CC_MYSQL_SERVER}"               # 通知/消息数据库
+export CC_MYSQL_SERVER_USER="${CC_MYSQL_SERVER}"                       # 用户账号数据库
+export CC_MYSQL_SERVER_ORGANIZATION="${CC_MYSQL_SERVER}"               # 组织数据库
+export CC_MYSQL_SERVER_EMPLOYEE="${CC_MYSQL_SERVER}"                   # 职员数据库
+export CC_MYSQL_SERVER_ROLE="${CC_MYSQL_SERVER}"                       # 角色/权限数据库
+export CC_MYSQL_SERVER_TAG="${CC_MYSQL_SERVER}"                        # 标签数据库
+export CC_MYSQL_SERVER_FILE="${CC_MYSQL_SERVER}"                       # 文件数据库
+export CC_MYSQL_SERVER_COMMENT="${CC_MYSQL_SERVER}"                    # 批注/评论数据库
+export CC_MYSQL_SERVER_COMMUNITY="${CC_MYSQL_SERVER}"                  # 社区/问答数据库
+export CC_MYSQL_SERVER_POST="${CC_MYSQL_SERVER}"                       # 帖子数据库
+export CC_MYSQL_SERVER_TASK="${CC_MYSQL_SERVER}"                       # 任务数据库
+export CC_MYSQL_SERVER_PRODUCT="${CC_MYSQL_SERVER}"                    # 产品数据库
+export CC_MYSQL_SERVER_SERVICE="${CC_MYSQL_SERVER}"                    # 平台服务数据库
+export CC_MYSQL_SERVER_ORDER="${CC_MYSQL_SERVER}"                      # 订单数据库
+export CC_MYSQL_SERVER_STATISTICS="${CC_MYSQL_SERVER}"                 # 统计数据库
+export CC_MYSQL_SERVER_MONOLITHIC="${CC_MYSQL_SERVER}"                 # 单实例启动模式数据库
+export CC_CAPTCHA_FONT_DIR="/var/codelet/resources/fonts/captcha/"     # 图形验证码字体文件路径

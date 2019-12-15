@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=480,user-scalable=no">
+<title>Codelet Cloud REST API 文档</title>
+<link rel="stylesheet" type="text/css" href="./index.css?_rv20191127175928">
+<script type="text/javascript" src="./md5.min.js"></script>
+<script type="text/javascript" src="./ejs.min.js"></script>
+<script type="text/html" id="endpoints-template">
+    <header>Codelet Cloud REST API<span class="endpoint-count"><%= context.$endpointCount %></span></header>
+    <ul>
+        <li><a onclick="void(location.hash = '#/');">REST API 文档阅读说明</a></li>
+        <%
+            Object.keys(context.$tags).forEach(domainName => {
+                const domain = context.$tags[domainName];
+                if (!domain.$endpointCount) {
+                    return;
+                }
+        %>
+        <li id="<%= domain.$id %>">
+            <a onclick="void(location.hash = `#/<%= domain.$id %>`);"><%= domainName %><span class="endpoint-count"><%= domain.$endpointCount %></span></a>
+            <ul>
+                <%
+                    Object.keys(domain).forEach(bizName => {
+                        const biz = domain[bizName];
+                        Object.keys(biz).forEach(responsibilityName => {
+                            const responsibility = biz[responsibilityName];
+                            if (!responsibility.$endpointCount) {
+                                return;
+                            }
+                %>
+                    <li class="responsibility">
+                        <a><%= bizName %><span class="responsibility"><%= responsibilityName %></span><span class="endpoint-count"><%= responsibility.$endpointCount %></span></a>
+                        <ul>
+                        <%
+                            Object.keys(responsibility).forEach(endpointURI => {
+                                const endpoint = responsibility[endpointURI];
+                                if (!responsibility.$endpointCount) {
+                                    return;
+                                }
+                                Object.keys(endpoint).forEach(endpointMethod => {
+                                    const api = endpoint[endpointMethod];
+                        %>
+                            <li id="<%= api.$id %>" class="endpoint">
+                                <a onclick="void(location.hash = `#/<%= api.$id %>`);">
+                                    <span class="api-name"><%= api.summary %></span>
+                                    <% api.$mappings.forEach(mapping => { %>
+                                    <span class="endpoint"><span class="method <%= mapping.method.toLowerCase() %>"><%= mapping.method %></span><span class="path"><%- mapping.pathHTML %></span></span>
+                                    <% }); %>
+                                </a>
+                            </li>
+                        <%
+                                });
+                            });
+                        %>
+                        </ul>
+                    </li>
+                <%
+                        });
+                   });
+                %>
+            </ul>
+        </li>
+        <% }); %>
+    </ul>
+</script>
+<script type="text/html" id="specifications-template">
+    <h2><%= api.summary %></h2>
+
+    <h3>请求方法及路径</h3>
+    <div class="endpoint">
+        <div>
+            <% api.$mappings.forEach(mapping => { %>
+            <span class="endpoint"><span class="method <%= mapping.method.toLowerCase() %>"><%= mapping.method %></span><span class="path"><%- mapping.pathHTML %></span></span>
+            <% }); %>
+        </div>
+    </div>
+
+    <% if (api.$controllerName || api.$handlerName) { %>
+    <h3>控制器方法</h3>
+<pre class="handler-signature">
+<code class="controller-signature"><%= api.$controllerName %></code>
+<code class="handler-signature"><%= api.$handlerName || '未设置 @ApiOperation 注解' %></code>
+</pre>
+    <% } %>
+
+    <% if (Array.isArray(api.description) && api.description.length > 0) { %>
+    <h3>说明</h3>
+    <% api.description.forEach(paragraph => { %>
+    <p><%- paragraph %></p>
+    <% }); } %>
+
+    <% if (api.internalAccessOnly || api.accessTokenRequired || api.administrative || api.ownership || api.membership || api.captchaRequired || api.verificationCode) { %>
+    <h3>访问权限</h3>
+    <ul><%
+        if (api.internalAccessOnly) { %><li>仅限服务之间内部调用</li><% }
+        if (api.accessTokenRequired) { %><li>必须先通过<a href="#/EP75ED58C485799CFD355C361FC1512912">登录认证</a></li><% }
+        if (api.administrative) { %><li>操作者必须为系统管理员</li><% }
+        if (api.ownership) { %><li>操作者必须为资源所有者</li><% }
+        if (api.membership) { %><li>操作者必须为资源所属组织的成员</li><% }
+        if (api.captchaRequired) { %><li>必须识别图形验证码</li><% }
+        if (api.verificationCode) { %><li>通过电子邮箱地址或手机号码进行操作时，必须提供电子邮件验证码或短信验证码</li><% }
+    %></ul>
+    <% } %>
+
+    <% if (api.$pathVariables.length > 0) { %>
+    <h3>路径参数</h3>
+    <%- ejs.render(templates.parameters, {templates, properties: api.$pathVariables, depth: 0, showRequired: false}) %>
+    <% } %>
+
+    <% if (api.$searchParameters.length > 0) { %>
+    <h3>查询参数</h3>
+    <%- ejs.render(templates.parameters, {templates, properties: api.$searchParameters, depth: 0, showRequired: true}) %>
+    <% } %>
+
+    <% if (api.$requestBody) { %>
+    <h3>请求数据 <code class="data-type"><%= api.$requestBody.$schema %></code></h3>
+    <%- ejs.render(templates.parameters, {templates, properties: api.$requestBody.properties, depth: 0, showRequired: true}) %>
+    <% } %>
+
+    <h3>响应数据</h3>
+    <% if (!api.$responseBody) { %>
+    <div class="no-content">无</div>
+    <% } else { %>
+    <%- ejs.render(templates.parameters, {templates, properties: api.$responseBody, depth: 0, showRequired: false}) %>
+    <% } %>
+</script>
+<script type="text/html" id="parameters-template">
+    <table class="properties">
+        <thead>
+            <tr>
+                <th class="text-left parameter-name">名称</th>
+                <th class="text-center data-type">类型</th>
+                <% if (showRequired) { %><th class="text-center necessity">必须</th><% } %>
+                <th class="text-left description">说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% properties.forEach(property => { %>
+            <tr>
+                <td class="text-left parameter-name"><%= property.name %></td>
+                <td class="text-center data-type"><%- property.$dataTypeName || '&nbsp;' %></td>
+                <% if (showRequired) { %><td class="text-center necessity <%- !!property.required ? 'required' : '' %>"><%- !!property.required ? '是' : '&nbsp;' %></td><% } %>
+                <td class="text-left description">
+                    <%= property.description %>
+
+                    <% if (property.$schema) { %>
+                    <code class="data-type"><%= property.$schema %></code>
+                    <% } %>
+
+                    <% if (property.enum && property.enum.length > 0) { %>
+                    <label class="values">有效值：<% property.enum.forEach(value => { %><code class="value"><%= value %></code><% }); %></label>
+                    <% } %>
+
+                    <% if (typeof property.min === 'number' || typeof property.max === 'number') { %>
+                    <label class="values"><%
+                        if (typeof property.min === 'number' && typeof property.max === 'number') { %>取值范围：<code><%= property.min %></code> ~ <code><%= property.max %></code><% }
+                        else if (typeof property.min === 'number') { %>最小值：<code><%= property.min %></code><% }
+                        else if (typeof property.max === 'number') { %>最大值：<code><%= property.max %></code><% }
+                    %></label>
+                    <% } %>
+
+                    <% if (!(property.positive && property.negative && property.zero) && (property.positive || property.negative || property.zero)) { %>
+                    <label class="values">取值范围：<%
+                        if (property.positive && property.negative) { %>≠ <code>0</code><% }
+                        else if (property.positive && property.zero) { %>&gt;= <code>0</code><% }
+                        else if (property.positive) { %>&gt; <code>0</code><% }
+                        else if (property.negative && property.zero) { %>&lt;= <code>0</code><% }
+                        else if (property.negative) { %>&lt; <code>0</code><% }
+                        %></label>
+                    <% } %>
+
+                    <% if (property.digits && property.digits.length > 0) { %><label class="values">
+                        整数位位数：<code><%= property.digits[0] %></code>
+                        小数位位数：<code><%= property.digits[1] %></code>
+                    </label><% } %>
+
+                    <% if ((property.size || []).length > 0) { %>
+                    <label class="values"><%
+                        if (property.size[0] && property.size[1] && property.size[1] != 2147483647) { %>长度范围：<code><%= property.size[0] %></code> ~ <code><%= property.size[1] %></code><% }
+                        else if (property.size[0]) { %>最小长度：<code><%= property.size[0] %></code><% }
+                        else if (property.size[1]) { %>最大长度：<code><%= property.size[1] %></code><% }
+                        %></label>
+                    <% } %>
+
+                    <% if (!(property.future && property.past) && (property.future || property.past)) { %>
+                    <label class="values"><%
+                        if (property.future) { %>不得早于当前时间<% }
+                        else if (property.past) { %>不得晚于当前时间<% }
+                        %></label>
+                    <% } %>
+
+                    <% if (property.properties && depth < 2) { %>
+                    <%- ejs.render(templates.parameters, {templates, properties: property.properties, depth: depth + 1, showRequired}) %>
+                    <% } %>
+                </td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</script>
+</head>
+<body class="specifications">
+<section id="instructions">
+    <h2>REST API 文档阅读说明</h2>
+    <ul>
+        <li>REST API 文档中包含了调用接口所需要的必要信息，如请求方法、请求路径、路径参数、查询参数、请求数据等</li>
+        <li>构造请求 URL 时注意要对路径参数和查询参数进行编码（通过 <code class="keyword">encodeURIComponent</code> 方法）</li>
+        <li>若一个查询参数的类型为数组，那么在构造请求 URL 时生成多个键值对即可，例如 <code class="keyword">?tags=DRINK&tags=NO_SUGAR&tags=FRUIT</code></li>
+        <li>若无特殊说明，请求数据的类型均为 <code class="keyword">application/json</code></li>
+        <li><!--suppress HtmlUnknownAnchorTarget--><a href="#/EP75ED58C485799CFD355C361FC1512912">认证接口</a>将通过 <code class="keyword">X-Access-Token</code> 响应头返回 <a href="https://jwt.io/" target="jwt">JWT (JSON Web Token)</a> 访问令牌，客户端需要将访问令牌缓存到本地</li>
+        <li>对于需要访问权限的接口，需要通过 <code class="keyword">Authorization</code> 请求头传递访问令牌，形式为 <code class="http-header"><code class="key">Authorization:</code> <code class="value">Bearer <code class="parameter-name">JWT</code></code></code></li>
+        <li>日期类型的请求参数需要格式化为 <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="iso-date-time">ISO</a> 的格式（<code class="keyword">date.toISOString()</code>）</li>
+        <li>
+            通常情况下 HTTP 响应数据的数据结构（以用户查询为例）如下：
+<pre class="source">
+{
+    <code class="property-name">"success"</code>: <code class="keyword">true</code>,
+    <code class="property-name">"data"</code>: [
+        {
+            <code class="property-name">"id"</code>: <code class="string">"BYJV6JK3LBDEIRRN"</code>,
+            <code class="property-name">"name"</code>: <code class="string">"马博文"</code>,
+            <code class="property-name">"type"</code>: <code class="string">"USER"</code>,
+            <code class="property-name">"revision"</code>: <code class="number">1574324949689</code>,
+            <code class="property-name">"createdAt"</code>: <code class="string">"2019-11-21T08:29:25.722Z"</code>,
+            <code class="property-name">"createdBy"</code>: {
+                <code class="property-name">"$ref"</code>: <code class="string">"0000000000000000"</code>
+            }
+        }
+    ],
+    <code class="property-name">"included"</code>: {
+        <code class="property-name">"0000000000000000"</code>: {
+            <code class="property-name">"name"</code>: <code class="string">"System"</code>,
+            <code class="property-name">"type"</code>: <code class="string">"SYSTEM"</code>
+        }
+    }
+}
+</pre>
+            <ul>
+                <li><code class="property-name">success</code> 用于说明请求是否被成功处理</li>
+                <li><code class="property-name">data</code> 为返回的业务数据，具体类型及业务意义请参照响应 API 的<code class="keyword">响应数据</code>部分的说明</li>
+                <li>日期类型的数据将编码为 <a href="https://www.iso.org/iso-8601-date-and-time-format.html" target="iso-date-time">ISO</a> 的格式，Web 前端可直接通过 <code class="keyword">Date</code> 对象的构造方法构造</li>
+                <li>与返回的业务数据相关联的数据将被设置到 <code class="property-name">included</code> 对象中</li>
+            </ul>
+        </li>
+        <li>
+            发生错误时的 HTTP 响应数据的数据结构如下：
+<pre class="source">
+{
+    <code class="property-name">"success"</code>: <code class="keyword">false</code>,
+    <code class="property-name">"error"</code>: {
+        <code class="property-name">"code"</code>: <code class="string">"error.unauthorized"</code>,
+        <code class="property-name">"message"</code>: <code class="string">"当前用户尚未登录。"</code>
+    }
+}
+</pre>
+        </li>
+    </ul>
+</section>
+<section id="specifications"></section>
+<div class="buttons">
+    <button id="show-index" onclick="document.body.classList.add('show-index');"></button>
+</div>
+<div id="mask" onclick="document.body.classList.remove('show-index')"></div>
+<nav id="endpoints"></nav>
+<footer><span>&copy; 2019 CodeDance</span></footer>
+<script type="text/javascript" src="./index.js?_rv20191126195945"></script>
+</body>
+</html>

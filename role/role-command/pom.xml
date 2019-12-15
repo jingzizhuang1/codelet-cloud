@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.codelet.cloud</groupId>
+        <artifactId>role</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <groupId>net.codelet.cloud.role</groupId>
+    <artifactId>role-command</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>role-command</name>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- Codelet Cloud -->
+        <dependency>
+            <groupId>net.codelet.cloud.auth</groupId>
+            <artifactId>auth-command-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.codelet.cloud.organization</groupId>
+            <artifactId>organization-query-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.codelet.cloud.employee</groupId>
+            <artifactId>employee-query-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.codelet.cloud.role</groupId>
+            <artifactId>role-command-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+</project>

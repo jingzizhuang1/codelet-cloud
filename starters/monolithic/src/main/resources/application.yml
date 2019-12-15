@@ -1,0 +1,88 @@
+server.port: 8990
+
+spring:
+    pid:
+        file: ${spring.application.name}.pid
+    cloud:
+        bus:
+            id: ${spring.application.name}@${spring.cloud.client.ip-address}:${server.port}
+            enabled: true
+            refresh:
+                enabled: true
+            trace:
+                enabled: true
+        stream:
+            default-binder: kafka
+            kafka:
+                binder:
+                    brokers: ${CC_KAFKA_BROKERS}
+                configuration:
+                    auto:
+                        offset:
+                            reset: latest
+            bindings:
+                springCloudBusInput:
+                    destination: springCloudBus
+                    group: ${spring.application.name}
+                    content-type: application/json
+                springCloudBusOutput:
+                    destination: springCloudBus
+                    group: ${spring.application.name}
+                    content-type: application/json
+                codeletCloudBroadcastInput:
+                    destination: codeletCloudBroadcast
+                    group: ${spring.application.name}@${spring.cloud.client.ip-address}:${server.port}
+                    content-type: application/json
+                codeletCloudBroadcastOutput:
+                    destination: codeletCloudBroadcast
+                    group: ${spring.application.name}@${spring.cloud.client.ip-address}:${server.port}
+                    content-type: application/json
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        show-sql: true
+        hibernate:
+            ddl-auto: none
+    datasource:
+        url: jdbc:mysql://${CC_MYSQL_SERVER_MONOLITHIC}/codelet_cloud?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: codelet
+        password: 1qazxsw2
+        hikari:
+            connection-timeout: 60000
+            minimum-idle: 5
+            maximum-pool-size: 50
+            idle-timeout: 120000
+            max-lifetime: 240000
+            auto-commit: true
+    redis:
+        cluster:
+            nodes:
+            max-redirects: 8
+        host: ${CC_REDIS_SERVER_HOST}
+        port: ${CC_REDIS_SERVER_PORT}
+        password: 1qazxsw2
+        database: 0
+        timeout: 10000
+    mvc:
+        favicon:
+            enabled: false
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+
+logging:
+    config: classpath:log4j2.yml
+    level:
+        io:
+            swagger:
+                models:
+                    parameters:
+                        AbstractSerializableParameter: error
+
+application:
+    resources:
+        captcha-fonts: ${CC_CAPTCHA_FONT_DIR}
+
+debug: false

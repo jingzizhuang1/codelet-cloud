@@ -1,0 +1,1 @@
+[Codelet Cloud] You are going to sign in Codelet Cloud by mobile number, the verification code is ${code}.

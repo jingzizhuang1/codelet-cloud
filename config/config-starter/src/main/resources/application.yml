@@ -1,0 +1,16 @@
+server:
+    port: 8001
+
+spring:
+    pid.file: ${spring.application.name}.pid
+    config.name: codelet_cloud
+    cloud:
+        config.server:
+            prefix: /
+            git.uri: ${CC_CONFIG_GIT_URI}
+        consul:
+            host: ${CC_CONSUL_SERVER_HOST}
+            port: ${CC_CONSUL_SERVER_PORT}
+            discovery:
+                enabled: true
+                instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}

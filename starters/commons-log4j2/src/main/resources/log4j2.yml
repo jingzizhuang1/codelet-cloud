@@ -1,0 +1,81 @@
+# Log4j2 Configuration
+#
+# Log Levels
+#
+#          TRACE  DEBUG  INFO   WARN   ERROR  FATAL  OFF
+#   ------------------------------------------------------
+#   TRACE  Yes    -      -      -      -      -      -
+#   DEBUG  Yes    Yes    -      -      -      -      -
+#   INFO   Yes    Yes    Yes    -      -      -      -
+#   WARN   Yes    Yes    Yes    Yes    -      -      -
+#   ERROR  Yes    Yes    Yes    Yes    Yes    -      -
+#   FATAL  Yes    Yes    Yes    Yes    Yes    Yes    -
+#   ALL    Yes    Yes    Yes    Yes    Yes    Yes    Yes
+#
+# Pattern Fields
+#
+#   %d     : Date & time
+#   %t     : Thread
+#   %p     : Log level
+#   %C{1.} : Logger (short format)
+#   %m     : Message
+#   %n     : New line
+Configuration:
+    Properties:
+        Property:
+            - name: file.name
+              value: ${bundle:bootstrap:spring.application.name}
+            - name: file.pattern
+              value: ${file.name}.%d{yyyy-MM-dd}.%i
+            - name: pattern.file
+              value: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%p][%t][%C{1.}] %m%n"
+            - name: max-file-size
+              value: "16 MB"
+            - name: max-file-count
+              value: 9
+    Appenders:
+        Console:
+            - name: STDOUT
+              target: SYSTEM_OUT
+              PatternLayout:
+                  pattern: "\u001B[34m%d{yyyy-MM-dd HH:mm:ss.SSS} \u001B[36m[%p]\u001B[32m[%t]\u001B[33m[%C{1.}]\u001B[0m %m%n"
+        RollingFile:
+            # Info log file
+            - name: INFO_LOG_FILE
+              ignoreExceptions: false
+              fileName: ${file.name}.info.log
+              filePattern: ${file.pattern}.info.log.gz
+              PatternLayout:
+                  pattern: ${pattern.file}
+              ThresholdFilter:
+                  level: INFO
+                  onMatch: ACCEPT
+                  onMismatch: DENY
+              Policies:
+                  SizeBasedTriggeringPolicy:
+                      size: ${max-file-size}
+              DefaultRolloverStrategy:
+                  max: ${max-file-count}
+            # Error log file
+            - name: ERROR_LOG_FILE
+              ignoreExceptions: false
+              fileName: ${file.name}.error.log
+              filePattern: ${file.pattern}.error.log.gz
+              PatternLayout:
+                  pattern: ${pattern.file}
+              ThresholdFilter:
+                  level: ERROR
+                  onMatch: ACCEPT
+                  onMismatch: DENY
+              Policies:
+                  SizeBasedTriggeringPolicy:
+                      size: ${max-file-size}
+              DefaultRolloverStrategy:
+                  max: ${max-file-count}
+    Loggers:
+        Root:
+            level: INFO
+            AppenderRef:
+                - ref: STDOUT
+                - ref: INFO_LOG_FILE
+                - ref: ERROR_LOG_FILE

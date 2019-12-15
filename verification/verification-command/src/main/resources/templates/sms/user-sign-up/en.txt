@@ -1,0 +1,1 @@
+[Codelet Cloud] You are going to sign up user account of Codelet Cloud, the verification code is ${code}.

@@ -1,0 +1,1 @@
+[Codelet Cloud] 你正在使用手机号码注册用户，验证码是 ${code}
