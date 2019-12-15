@@ -1,0 +1,24 @@
+{
+  "datacenter":     "codelet",
+  "data_dir":       "/var/www/codelet-cloud/@consul/client-data",
+  "pid_file":       "/var/www/codelet-cloud/@consul/client-logs/client.pid",
+  "log_file":       "/var/www/codelet-cloud/@consul/client-logs/client.log",
+  "log_level":      "trace",
+  "encrypt":        "iU7UZwXjrgmtCfmZqIF+OqhFYHguamAywXYwH4YT1Kg=",
+  "client_addr":    "0.0.0.0",
+  "retry_interval": "5s",
+  "retry_join": [
+    "127.0.0.1:8932"
+  ],
+  "rejoin_after_leave":      true,
+  "leave_on_terminate":      true,
+  "skip_leave_on_interrupt": false,
+  "disable_update_check":    true,
+  "ports": {
+    "http":     8940,
+    "dns":      8941,
+    "serf_lan": 8942,
+    "serf_wan": 8943
+  }
+}
+

@@ -20,14 +20,4 @@ SETX CC_MYSQL_SERVER_USER         "$Env:CC_MYSQL_SERVER"                        
 SETX CC_MYSQL_SERVER_ORGANIZATION "$Env:CC_MYSQL_SERVER"                        # 组织数据库
 SETX CC_MYSQL_SERVER_EMPLOYEE     "$Env:CC_MYSQL_SERVER"                        # 职员数据库
 SETX CC_MYSQL_SERVER_ROLE         "$Env:CC_MYSQL_SERVER"                        # 角色/权限数据库
-SETX CC_MYSQL_SERVER_TAG          "$Env:CC_MYSQL_SERVER"                        # 标签数据库
-SETX CC_MYSQL_SERVER_FILE         "$Env:CC_MYSQL_SERVER"                        # 文件数据库
-SETX CC_MYSQL_SERVER_COMMENT      "$Env:CC_MYSQL_SERVER"                        # 批注/评论数据库
-SETX CC_MYSQL_SERVER_COMMUNITY    "$Env:CC_MYSQL_SERVER"                        # 社区/问答数据库
-SETX CC_MYSQL_SERVER_POST         "$Env:CC_MYSQL_SERVER"                        # 帖子数据库
-SETX CC_MYSQL_SERVER_TASK         "$Env:CC_MYSQL_SERVER"                        # 任务数据库
-SETX CC_MYSQL_SERVER_PRODUCT      "$Env:CC_MYSQL_SERVER"                        # 产品数据库
-SETX CC_MYSQL_SERVER_SERVICE      "$Env:CC_MYSQL_SERVER"                        # 平台服务数据库
-SETX CC_MYSQL_SERVER_ORDER        "$Env:CC_MYSQL_SERVER"                        # 订单数据库
-SETX CC_MYSQL_SERVER_STATISTICS   "$Env:CC_MYSQL_SERVER"                        # 统计数据库
 SETX CC_MYSQL_SERVER_MONOLITHIC   "$Env:CC_MYSQL_SERVER"                        # 单实例启动模式数据库
